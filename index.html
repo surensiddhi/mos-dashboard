@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOS Financial Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="auth.js"></script>
+<style>
+  :root{
+    --bg:#0d1620; --bg2:#101d29; --panel:#152433; --panel2:#1a2d3e;
+    --line:#22384a; --ink:#eaf1f6; --muted:#8ba2b4; --faint:#5c7488;
+    --accent:#2dd4bf; --accent2:#5eead4; --accentdim:#0e6b62;
+    --pos:#34d399; --neg:#fb7185; --warn:#fbbf24;
+    --c1:#2dd4bf; --c2:#38bdf8; --c3:#818cf8; --c4:#f472b6; --c5:#fbbf24; --c6:#a3e635; --c7:#fb923c; --c8:#94a3b8; --c9:#f87171; --c10:#22d3ee;
+    --shadow:0 1px 0 rgba(255,255,255,.03), 0 10px 30px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:radial-gradient(1200px 600px at 70% -10%, #14283a 0%, var(--bg) 55%);
+    color:var(--ink);font-family:"Inter","Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.5;
+    padding:0 0 64px;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .topwrap{position:sticky;top:0;z-index:50;background:rgba(13,22,32,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .top{max-width:1240px;margin:0 auto;padding:16px 24px}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .brand .eyebrow{font-size:10.5px;text-transform:uppercase;letter-spacing:.22em;color:var(--accent);font-weight:600}
+  .brand h1{font-size:20px;font-weight:680;letter-spacing:-.02em;margin-top:3px}
+  .unit{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:3px}
+  .unit button{background:none;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;font-size:12px;cursor:pointer;font-weight:600}
+  .unit button.on{background:var(--accent);color:#06231f}
+  .filters{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
+  .fgroup{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .fgroup .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)}
+  select{background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:9px;font-size:13px;font-family:inherit;cursor:pointer;min-width:160px}
+  select:focus{outline:2px solid var(--accentdim);outline-offset:1px}
+  main{max-width:1240px;margin:0 auto;padding:22px 24px 0}
+  .seclabel{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--faint);font-weight:600;margin:26px 2px 12px}
+  .seclabel:first-child{margin-top:6px}
+  .flag{display:flex;gap:10px;align-items:flex-start;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.35);border-radius:12px;padding:12px 14px;margin:6px 0 0;font-size:12.5px;color:#f5d98a}
+  .flag b{color:var(--warn)}
+  .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .card{background:linear-gradient(180deg,var(--panel) 0%,var(--bg2) 100%);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.8}
+  .card.pos::before{background:var(--pos)} .card.neg::before{background:var(--neg)} .card.warn::before{background:var(--warn)}
+  .card .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);font-weight:600}
+  .card .v{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:9px;font-variant-numeric:tabular-nums}
+  .card .u{font-size:13px;color:var(--muted);font-weight:600;margin-left:3px}
+  .card .sub{font-size:11.5px;color:var(--muted);margin-top:6px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px}
+  .kpi .k{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:600}
+  .kpi .v{font-size:20px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums}
+  .kpi .n{font-size:10.5px;margin-top:3px}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);min-width:0}
+  .panel h3{font-size:13.5px;font-weight:650}
+  .panel .ptag{font-size:11px;color:var(--faint);margin:2px 0 14px}
+  .chartbox{position:relative;height:280px}
+  .chartbox.sm{height:240px}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{text-align:right;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  td{padding:10px;border-bottom:1px solid rgba(34,56,74,.5);white-space:nowrap;font-variant-numeric:tabular-nums}
+  tbody tr:hover td{background:var(--panel2)}
+  td.dim{color:var(--muted)}
+  .foot{max-width:1240px;margin:30px auto 0;padding:18px 24px 0;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.7}
+  .empty{padding:40px 20px;text-align:center;color:var(--faint);font-size:13px;border:1px dashed var(--line);border-radius:14px}
+  @media(max-width:1000px){.cards{grid-template-columns:repeat(3,1fr)}.kpis{grid-template-columns:repeat(3,1fr)}.grid2,.grid3{grid-template-columns:1fr}.chartbox{height:300px}}
+  @media(max-width:560px){
+    .top{padding:14px 16px}.brand h1{font-size:17px}main{padding:18px 16px 0}
+    .cards{grid-template-columns:repeat(2,1fr);gap:10px}.kpis{grid-template-columns:repeat(2,1fr)}
+    .card{padding:15px 14px}.card .v{font-size:21px}
+    .chartbox,.chartbox.sm{height:260px}
+    /* filter bar: two controls per row */
+    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .filters>*{width:auto!important;margin:0!important;min-width:0;justify-content:space-between}
+    .fgroup{justify-content:space-between}
+    .filters select{flex:1;min-width:0}
+    #elapsedBadge{min-width:0}
+    #resetBtn,#logoutBtn{width:100%}
+    .filters label.fgroup{white-space:nowrap}
+  }
+  @media(max-width:360px){.cards{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="loginGate" style="position:fixed;inset:0;z-index:200;background:radial-gradient(900px 500px at 70% -10%,#14283a,#0d1620 60%);display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 28px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.5)">
+    <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:.22em;color:var(--accent);font-weight:600">Management Operating Statement</div>
+    <h2 style="font-size:18px;font-weight:700;margin:6px 0 2px">MOS Dashboard</h2>
+    <div style="font-size:12.5px;color:var(--muted);margin-bottom:20px">Sign in to continue</div>
+    <input id="luser" type="text" placeholder="User ID" autocomplete="username" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:11px 13px;border-radius:9px;font-size:14px;margin-bottom:10px;font-family:inherit">
+    <input id="lpass" type="password" placeholder="Password" autocomplete="current-password" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:11px 13px;border-radius:9px;font-size:14px;margin-bottom:6px;font-family:inherit">
+    <div id="lerr" style="font-size:12px;color:var(--neg);min-height:16px;margin-bottom:8px"></div>
+    <button id="lbtn" style="width:100%;background:var(--accent);color:#06231f;border:0;padding:12px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Sign in</button>
+  </div>
+</div>
+<div id="appWrap" style="display:none">
+
+<div class="topwrap"><div class="top">
+  <div class="brandrow">
+    <div class="brand"><div class="eyebrow">Management Operating Statement</div><h1>MOS Financial Dashboard</h1></div>
+    <div class="unit" id="unitToggle"><button data-u="crore" class="on">Crore</button><button data-u="lakh">Lakh</button><button data-u="full">Full</button></div>
+  </div>
+  <div class="filters">
+    <div class="fgroup"><span class="lbl">Period</span><select id="periodSel"></select></div>
+    <div class="fgroup"><span class="lbl">Data as on</span><span id="asOnStamp" style="font-size:13px;font-weight:600;color:var(--ink)">—</span></div>
+    <div class="fgroup" style="margin-left:auto"><span class="lbl">Days elapsed</span><span id="elapsedBadge" style="background:var(--panel);border:1px solid var(--line);color:var(--accent);padding:7px 13px;border-radius:9px;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">—</span></div>
+    <button id="resetBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Reset filters</button>
+    <label class="fgroup" style="cursor:pointer"><span class="lbl" style="color:var(--accent)">↻ Load data file</span><input type="file" id="dataFile" accept=".json" style="display:none"></label>
+    <button id="logoutBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Sign out</button>
+  </div>
+</div></div>
+
+<main>
+  <div id="flags"></div>
+  <div class="seclabel">Headline</div>
+  <div class="cards" id="cards"></div>
+
+  <div class="seclabel">Working capital &amp; efficiency</div>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="seclabel">Profit &amp; Loss</div>
+  <div class="grid2">
+    <div class="panel"><h3>P&amp;L summary</h3><div class="ptag">Revenue, cost and expense for the period</div><div class="chartbox"><canvas id="plBar"></canvas></div></div>
+    <div class="panel"><h3>Expense breakdown</h3><div class="ptag">Share of total expense by line</div><div class="chartbox"><canvas id="expDonut"></canvas></div></div>
+  </div>
+
+  <div class="seclabel">Financial position</div>
+  <div class="grid3">
+    <div class="panel"><h3>Balance sheet mix</h3><div class="ptag">Closing balances by group</div><div class="chartbox sm"><canvas id="bsDonut"></canvas></div></div>
+    <div class="panel"><h3>Key ratios</h3><div class="ptag">Liquidity &amp; leverage</div><div id="ratios"></div></div>
+    <div class="panel"><h3>Assets vs liabilities</h3><div class="ptag">Gross position</div><div class="chartbox sm"><canvas id="alBar"></canvas></div></div>
+  </div>
+
+  <div class="seclabel" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <span>Receivables</span>
+    <span style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0">
+      <span class="lbl" style="font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)">Filter by agent</span>
+      <select id="agentSel" style="min-width:200px"></select>
+    </span>
+  </div>
+  <div class="grid2">
+    <div class="panel"><h3>AR aging by band</h3><div class="ptag" id="arTag">Net due across aging bands</div><div class="chartbox"><canvas id="arBar"></canvas></div></div>
+    <div class="panel"><h3>Receivables by agent</h3><div class="ptag">Top exposure first</div><div class="chartbox"><canvas id="agentBar"></canvas></div></div>
+  </div>
+  <div class="panel" style="margin-top:14px"><h3>Agent detail</h3><div class="ptag">Net due, overdue and collection by agent</div>
+    <div class="tablewrap"><table id="agentTable"><thead><tr><th>Agent</th><th>Customers</th><th>Current</th><th>Overdue 90+</th><th>Net Due</th></tr></thead><tbody></tbody></table></div>
+  </div>
+
+  <div class="seclabel">Inventory</div>
+  <div class="grid2">
+    <div class="panel"><h3>Inventory by category</h3><div class="ptag">Stock value share</div><div class="chartbox"><canvas id="invDonut"></canvas></div></div>
+    <div class="panel"><h3>Inventory aging</h3><div class="ptag">Value across age buckets</div><div class="chartbox"><canvas id="invBar"></canvas></div></div>
+  </div>
+  <div class="panel" style="margin-top:14px"><h3>Category detail</h3><div class="ptag">Stock value and slow-moving (Over 90) by category</div>
+    <div class="tablewrap"><table id="invTable"><thead><tr><th>Category</th><th>Items</th><th>0–30</th><th>30–60</th><th>60–90</th><th>Over 90</th><th>Total</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</main>
+<div class="foot" id="foot"></div>
+</div>
+
+<script>
+
+/* ============ LOGIN GATE (light, client-side deterrent) ============ */
+/* User list and salt live in the separate file auth.js (loaded in <head>).
+   Edit auth.js to manage users — you never need to touch this file.
+   Fallback values below are used only if auth.js failed to load. */
+window.SALT = window.SALT || 'MOS-2026-board-x7q';
+window.SESSION_HOURS = window.SESSION_HOURS || 12;
+window.USERS = window.USERS || {};
+const SALT = window.SALT, SESSION_HOURS = window.SESSION_HOURS, USERS = window.USERS;
+async function sha256(s){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function sessionValid(){
+  try{ const s=JSON.parse(sessionStorage.getItem('mos_auth')||'null');
+    return s && s.exp>Date.now(); }catch(e){ return false; }
+}
+function showApp(){
+  document.getElementById('loginGate').style.display='none';
+  document.getElementById('appWrap').style.display='';
+  if(!window.__started){ window.__started=true; init(); }
+}
+async function tryLogin(){
+  const u=document.getElementById('luser').value.trim();
+  const p=document.getElementById('lpass').value;
+  const err=document.getElementById('lerr');
+  if(!u||!p){ err.textContent='Enter your user ID and password.'; return; }
+  const h=await sha256(SALT+p);
+  if(USERS[u] && USERS[u]===h){
+    sessionStorage.setItem('mos_auth',JSON.stringify({u:u,exp:Date.now()+SESSION_HOURS*3600000}));
+    err.textContent=''; showApp();
+  } else { err.textContent='Incorrect user ID or password.'; document.getElementById('lpass').value=''; }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('lbtn').onclick=tryLogin;
+  document.getElementById('lpass').addEventListener('keydown',e=>{ if(e.key==='Enter') tryLogin(); });
+  document.getElementById('luser').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('lpass').focus(); });
+  if(sessionValid()) showApp();
+});
+
+const EMBEDDED = {"meta": {"periods": ["2026-06-30"], "currency": "NPR", "unit": "crore", "bandLabels": ["Current", "1–90", "91–360", "360+"], "invBucketLabels": ["0–30", "30–60", "60–90", "Over 90"], "periodDays": {"2026-06-30": 90}, "flags": [{"desc": "ACER ODD 13 2025", "qty": 2, "value": 121090384}], "fyStart": {"2026-06-30": "2025-07-14"}, "lapsedDays": {"2026-06-30": 351}}, "trial": [{"date": "2026-06-30", "acc": "6010", "title": "ADMINISTRATIVE EXPENSES", "group": "Expense", "type": "Operating Expense", "open": 0, "dr": 22166401.62, "cr": 182167.61, "close": 21984234.01}, {"date": "2026-06-30", "acc": "1030", "title": "BALANCE IN BANK", "group": "Assets", "type": "Current Asset", "open": -23227538.79, "dr": 2712723113.18, "cr": 2701526194.52, "close": -12030620.13}, {"date": "2026-06-30", "acc": "1040", "title": "BANK GUARANTEE", "group": "Assets", "type": "Current Asset", "open": 591047.52, "dr": 1407967.5, "cr": 1690731.25, "close": 308283.77}, {"date": "2026-06-30", "acc": "1010", "title": "CASH & BANK", "group": "Assets", "type": "Current Asset", "open": -71021.6, "dr": 20012043.9, "cr": 19690147.81, "close": 250874.49}, {"date": "2026-06-30", "acc": "1020", "title": "CASH IN HAND", "group": "Assets", "type": "Current Asset", "open": 625516.03, "dr": 8084106, "cr": 8290994.98, "close": 418627.05}, {"date": "2026-06-30", "acc": "5000", "title": "COST OF GOODS SOLD", "group": "Expense", "type": "COGS", "open": 0, "dr": 330375673.87, "cr": 0, "close": 330375673.87}, {"date": "2026-06-30", "acc": "2110", "title": "DEMAND LOAN", "group": "Liabilities", "type": "Current Liability", "open": -211159656.83, "dr": 410785221.09, "cr": 257285493.12, "close": -57659928.86}, {"date": "2026-06-30", "acc": "1130", "title": "DEPOSIT", "group": "Assets", "type": "Current Asset", "open": 5700506.65, "dr": 0, "cr": 0, "close": 5700506.65}, {"date": "2026-06-30", "acc": "2530", "title": "DIRECTORS LOAN", "group": "Liabilities", "type": "Long Term Liability", "open": 0, "dr": 68596691.42, "cr": 119252458.33, "close": -50655766.91}, {"date": "2026-06-30", "acc": "6050", "title": "EXPENDITURE", "group": "Expense", "type": "Operating Expense", "open": 0, "dr": 235529584.64, "cr": 1151.62, "close": 235528433.02}, {"date": "2026-06-30", "acc": "2520", "title": "HIRE PURCHASE LOAN", "group": "Liabilities", "type": "Long Term Liability", "open": -3321214.26, "dr": 484687.71, "cr": 0, "close": -2836526.55}, {"date": "2026-06-30", "acc": "4100", "title": "INCOME", "group": "Revenue", "type": "Operating Income", "open": 0, "dr": 44.41, "cr": 220451043.87, "close": -220450999.46}, {"date": "2026-06-30", "acc": "1200", "title": "INTER COMPANY BALANCE", "group": "Assets", "type": "Current Asset", "open": 109304320.33, "dr": 51850282, "cr": 195800000, "close": -34645397.67}, {"date": "2026-06-30", "acc": "6100", "title": "LESS FINANCING COST", "group": "Expense", "type": "Finance Cost", "open": 0, "dr": 30049410.79, "cr": 4167.93, "close": 30045242.86}, {"date": "2026-06-30", "acc": "1050", "title": "LETTER OF CREDIT", "group": "Assets", "type": "Current Asset", "open": 10329141.06, "dr": 353639772.87, "cr": 37612439.43, "close": 326356474.5}, {"date": "2026-06-30", "acc": "2040", "title": "LIABILITIES", "group": "Liabilities", "type": "Current Liability", "open": -10000000, "dr": 0, "cr": 0, "close": -10000000}, {"date": "2026-06-30", "acc": "1120", "title": "LOANS & ADVANCE", "group": "Assets", "type": "Current Asset", "open": 13593517.28, "dr": 260400.95, "cr": 750, "close": 13853168.23}, {"date": "2026-06-30", "acc": "2020", "title": "OTHER PAYABLES", "group": "Liabilities", "type": "Current Liability", "open": -1391813.55, "dr": 17777080.28, "cr": 19539373.14, "close": -3154106.41}, {"date": "2026-06-30", "acc": "1110", "title": "OTHER RECEIVABLES", "group": "Assets", "type": "Current Asset", "open": 11245674.15, "dr": 78263703.08, "cr": 2344072.07, "close": 87165305.16}, {"date": "2026-06-30", "acc": "6020", "title": "PAYROLL RELATED EXPENSES", "group": "Expense", "type": "Operating Expense", "open": 0, "dr": 25621404.31, "cr": 228812.58, "close": 25392591.73}, {"date": "2026-06-30", "acc": "1500", "title": "PROPERTY, PLANT & EQUIPMENT", "group": "Assets", "type": "Fixed Asset", "open": 12051184.09, "dr": 361608.43, "cr": 0, "close": 12412792.52}, {"date": "2026-06-30", "acc": "1510", "title": "PROPERTY, PLANT & EQUIPMENTS", "group": "Assets", "type": "Fixed Asset", "open": 3205207.51, "dr": 0, "cr": 0, "close": 3205207.51}, {"date": "2026-06-30", "acc": "3100", "title": "RESERVE & SERPLUS", "group": "Equity", "type": "Equity", "open": -193802238.23, "dr": 0, "cr": 0, "close": -193802238.23}, {"date": "2026-06-30", "acc": "4000", "title": "REVENUE", "group": "Revenue", "type": "Operating Income", "open": 0, "dr": 40342708.13, "cr": 376573152.81, "close": -336230444.68}, {"date": "2026-06-30", "acc": "6030", "title": "SALES & MARKETING EXPENSES", "group": "Expense", "type": "Operating Expense", "open": 0, "dr": 4970079.32, "cr": 0, "close": 4970079.32}, {"date": "2026-06-30", "acc": "2120", "title": "SHORT TERM LOAN", "group": "Liabilities", "type": "Current Liability", "open": -180496000, "dr": 278865908.31, "cr": 298150000, "close": -199780091.69}, {"date": "2026-06-30", "acc": "2030", "title": "STATUTORY LIABILITES", "group": "Liabilities", "type": "Current Liability", "open": -4636885.92, "dr": 17460740.62, "cr": 81115084.36, "close": -68291229.66}, {"date": "2026-06-30", "acc": "2010", "title": "SUNDRY CREDITORS", "group": "Liabilities", "type": "Current Liability", "open": 21521331.53, "dr": 269033531.46, "cr": 698276337.22, "close": -407721474.23}, {"date": "2026-06-30", "acc": "1100", "title": "SUNDRY DEBTORS", "group": "Assets", "type": "Current Asset", "open": 106617499.37, "dr": 654233136.31, "cr": 593685786.44, "close": 167164849.24}, {"date": "2026-06-30", "acc": "2510", "title": "TERM LOAN", "group": "Liabilities", "type": "Long Term Liability", "open": -42878429.18, "dr": 276849489.65, "cr": 275652454.62, "close": -41681394.15}, {"date": "2026-06-30", "acc": "6040", "title": "TRAVELLING EXPENSES", "group": "Expense", "type": "Operating Expense", "open": 0, "dr": 633265.19, "cr": 0, "close": 633265.19}, {"date": "2026-06-30", "acc": "2130", "title": "USANCE LOAN", "group": "Liabilities", "type": "Current Liability", "open": -4685755.08, "dr": 133154629.59, "cr": 136179872.92, "close": -7710998.41}], "ar": [{"date": "2026-06-30", "agent": "BIJAY KUMAR SHRESTHA", "cust": 85, "collection": 1273794.78, "netdue": 49986074.28, "bands": [0, 44751257.92, 4416123.47, 818692.89]}, {"date": "2026-06-30", "agent": "Dinesh KC", "cust": 32, "collection": 1951000, "netdue": 27861100.75, "bands": [0, 25514370.86, 2260516.28, 86213.61]}, {"date": "2026-06-30", "agent": "BABITA TIMALSINA", "cust": 34, "collection": 1344325, "netdue": 18972788.28, "bands": [0, 17694996.43, 1243688, 34103.85]}, {"date": "2026-06-30", "agent": "PRAKASH GYAWALI", "cust": 45, "collection": 22694.7, "netdue": 10300998.31, "bands": [0, 10485.3, 1000, 10289513.01]}, {"date": "2026-06-30", "agent": "SURAJ B. CHHETRI", "cust": 1, "collection": 0, "netdue": 9314498.93, "bands": [0, 9314498.93, 0, 0]}, {"date": "2026-06-30", "agent": "SHOWROOM", "cust": 86, "collection": 112099.38, "netdue": 8219977.77, "bands": [0, 1050875.61, 2791304.1, 4377798.06]}, {"date": "2026-06-30", "agent": "(Unassigned)", "cust": 24, "collection": 0, "netdue": 6664985.16, "bands": [0, 811425.04, 857091.97, 4996468.15]}, {"date": "2026-06-30", "agent": "UTSAV SHUMSHER THAPA", "cust": 11, "collection": 29500, "netdue": 4305260.18, "bands": [0, 4303800, 1460.18, 0]}, {"date": "2026-06-30", "agent": "KARNA PRASAD PARAJULI", "cust": 33, "collection": 0, "netdue": 3899830.24, "bands": [0, 62500, 137944.95, 3699385.29]}, {"date": "2026-06-30", "agent": "SURAJ BASNET", "cust": 16, "collection": 0, "netdue": 3687324.72, "bands": [0, 0, 0, 3687324.72]}, {"date": "2026-06-30", "agent": "BHIMSEN BASNET", "cust": 7, "collection": 400000, "netdue": 2172500, "bands": [0, 2172500, 0, 0]}, {"date": "2026-06-30", "agent": "OLD", "cust": 44, "collection": 0, "netdue": 1905925.19, "bands": [0, 0, 0, 1905925.19]}, {"date": "2026-06-30", "agent": "OLD-RAJ", "cust": 24, "collection": 0, "netdue": 1402194.52, "bands": [0, 0, 0, 1402194.52]}, {"date": "2026-06-30", "agent": "OLD-KABIN", "cust": 1, "collection": 0, "netdue": 491883, "bands": [0, 0, 0, 491883]}, {"date": "2026-06-30", "agent": "OFFICE", "cust": 1, "collection": 0, "netdue": 380420, "bands": [0, 4220, 0, 376200]}, {"date": "2026-06-30", "agent": "BIKRAM RAJBHANDARI", "cust": 9, "collection": 0, "netdue": 350666.91, "bands": [0, 0, 0, 350666.91]}, {"date": "2026-06-30", "agent": "CHET NATH GURAGAIN", "cust": 3, "collection": 0, "netdue": 288462.18, "bands": [0, 0, 0, 288462.18]}, {"date": "2026-06-30", "agent": "MARKETING", "cust": 8, "collection": 0, "netdue": 250846.15, "bands": [0, 56740, 9530, 184576.15]}, {"date": "2026-06-30", "agent": "SHANKAR RAJ GURAGAIN", "cust": 4, "collection": 0, "netdue": 239011.47, "bands": [0, 212400, 290, 26321.47]}, {"date": "2026-06-30", "agent": "OLD-HIMAL", "cust": 1, "collection": 0, "netdue": 179500, "bands": [0, 0, 0, 179500]}, {"date": "2026-06-30", "agent": "BIBEK HADA", "cust": 5, "collection": 0, "netdue": 158829.98, "bands": [0, 0, 0, 158829.98]}, {"date": "2026-06-30", "agent": "OLD-JITEN", "cust": 1, "collection": 0, "netdue": 89863.73, "bands": [0, 0, 0, 89863.73]}, {"date": "2026-06-30", "agent": "SUBASH KUNWAR", "cust": 2, "collection": 0, "netdue": 81769.97, "bands": [0, 0, 0, 81769.97]}, {"date": "2026-06-30", "agent": "SABINA PRADHAN", "cust": 3, "collection": 0, "netdue": 71601.8, "bands": [0, 0, 17601.8, 54000]}, {"date": "2026-06-30", "agent": "Suzita", "cust": 3, "collection": 0, "netdue": 41759.9, "bands": [0, 32960, 8799.9, 0]}, {"date": "2026-06-30", "agent": "OLD-SUNNY", "cust": 2, "collection": 0, "netdue": 41512.95, "bands": [0, 0, 0, 41512.95]}, {"date": "2026-06-30", "agent": "SATISH THANI", "cust": 1, "collection": 0, "netdue": 33000, "bands": [0, 0, 0, 33000]}], "inv": [{"date": "2026-06-30", "cat": "Other", "items": 588, "buckets": [140656.3, 605706.38, 28292.18, 131869600.72], "total": 132644255.58}, {"date": "2026-06-30", "cat": "Printers & Consumables", "items": 687, "buckets": [5037149.61, 24732288.1, 37266725.39, 57377599.77], "total": 124413762.87}, {"date": "2026-06-30", "cat": "Systems & Devices", "items": 372, "buckets": [24073950.56, 1490614.32, 289115.04, 31047904.6], "total": 56901584.52}, {"date": "2026-06-30", "cat": "Monitors & Displays", "items": 24, "buckets": [58442.59, 4438643.89, 0, 2117394.61], "total": 6614481.09}, {"date": "2026-06-30", "cat": "Networking", "items": 81, "buckets": [0, 0, 0, 5200134.5], "total": 5200134.5}, {"date": "2026-06-30", "cat": "Components & Parts", "items": 207, "buckets": [31198.19, 0, 0, 5135441.2], "total": 5166639.39}, {"date": "2026-06-30", "cat": "Peripherals", "items": 65, "buckets": [22644.82, 0, 0, 4901142.02], "total": 4923786.84}, {"date": "2026-06-30", "cat": "Cables & Adaptors", "items": 79, "buckets": [50616.84, 8332.41, 0, 2404411], "total": 2463360.25}, {"date": "2026-06-30", "cat": "Storage", "items": 6, "buckets": [0, 0, 0, 290441.5], "total": 290441.5}, {"date": "2026-06-30", "cat": "Memory (RAM)", "items": 3, "buckets": [0, 0, 0, 75000.87], "total": 75000.87}]};
+async function loadData(){
+  // Prefer an external mosdata.json sitting next to this page (so you just
+  // replace that file to update). Falls back to the embedded snapshot if the
+  // file isn't found or the page is opened directly from disk.
+  try{
+    const r=await fetch('mosdata.json',{cache:'no-store'});
+    if(r.ok){ const j=await r.json(); if(j&&j.meta&&j.trial) return j; }
+  }catch(e){ /* file:// or not found -> use embedded */ }
+  return EMBEDDED;
+}
+
+let DB=null, unit="crore", activePeriod=null, activeAgent="All";
+const UNIT_DIV={crore:1e7, lakh:1e5, full:1};
+const UNIT_LABEL={crore:"Cr", lakh:"L", full:""};
+function groupIN(x){const neg=x<0;let s=Math.round(Math.abs(x)).toString();let last3=s.slice(-3),rest=s.slice(0,-3);if(rest)last3=','+last3;rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');return (neg?'-':'')+rest+last3;}
+function money(n){if(unit==='full')return groupIN(n);const val=n/UNIT_DIV[unit];return (val<0?'-':'')+Math.abs(val).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});}
+const uLabel=()=>UNIT_LABEL[unit];
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+Chart.defaults.color=css('--muted');Chart.defaults.font.family="Inter, sans-serif";Chart.defaults.font.size=11;Chart.defaults.maintainAspectRatio=false;
+let charts={};
+function draw(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id),cfg);}
+const yMoney={ticks:{callback:v=>money(v)},grid:{color:css('--line'),drawTicks:false}};
+const xClean={grid:{display:false}};
+const tip=lbl=>({callbacks:{label:c=>' '+(lbl?lbl(c):'')+money(c.raw)+' '+uLabel()}});
+function fillSelect(el,items,active){el.innerHTML=items.map(i=>`<option${i===active?' selected':''}>${i}</option>`).join('');}
+function shortName(s){const p=s.split(' ');return p.length<=2?s:p[0]+' '+p[1][0]+'.';}
+const PALETTE=['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8','--c9','--c10'].map(css);
+
+function render(){
+  const tb=DB.trial.filter(t=>t.date===activePeriod);
+  const arAll=DB.ar.filter(a=>a.date===activePeriod);
+  const invAll=DB.inv.filter(i=>i.date===activePeriod);
+  const days=(DB.meta.periodDays&&DB.meta.periodDays[activePeriod])||30;
+  // agent dropdown shows customer count alongside each name
+  const agentSel=document.getElementById('agentSel');
+  agentSel.innerHTML=`<option${activeAgent==="All"?' selected':''}>All</option>`+
+    arAll.map(a=>`<option value="${a.agent.replace(/"/g,'&quot;')}"${a.agent===activeAgent?' selected':''}>${a.agent} (${a.cust})</option>`).join('');
+  const stamp=document.getElementById('asOnStamp'); if(stamp) stamp.textContent=activePeriod;
+  const ar=activeAgent==="All"?arAll:arAll.filter(a=>a.agent===activeAgent);
+
+  /* flags */
+  const flags=(DB.meta.flags||[]).filter(f=>f.value);
+  document.getElementById('flags').innerHTML = flags.length?
+    `<div class="flag"><span>&#9888;</span><div><b>Data quality flag.</b> ${flags.length} inventory line(s) show an implausible per-unit value and likely need correction at source — e.g. "${flags[0].desc}" (${flags[0].qty} units, ${money(flags[0].value)} ${uLabel()}). Figures below include these as-is.</div></div>`:'';
+
+  /* headline KPIs — FLOWS use This Period (dr/cr), BALANCES use Closing (YTD) */
+  const revenue=sum(tb.filter(t=>t.group==="Revenue").map(t=>t.cr-t.dr));
+  const cogs=sum(tb.filter(t=>t.type==="COGS").map(t=>t.dr-t.cr));
+  const opex=sum(tb.filter(t=>t.group==="Expense"&&t.type!=="COGS").map(t=>t.dr-t.cr));
+  const expenseTotal=sum(tb.filter(t=>t.group==="Expense").map(t=>t.dr-t.cr));
+  const netProfit=revenue-expenseTotal, margin=revenue?netProfit/revenue*100:0;
+  const grossProfit=revenue-cogs, gm=revenue?grossProfit/revenue*100:0;
+  const arNet=sum(arAll.map(a=>a.netdue));
+  const arOverdue=sum(arAll.map(a=>a.bands[2]+a.bands[3]));
+  const invTotal=sum(invAll.map(i=>i.total));
+  const invSlow=sum(invAll.map(i=>i.buckets[3]));
+  const assets=sum(tb.filter(t=>t.group==="Assets").map(t=>t.close));
+  const liab=Math.abs(sum(tb.filter(t=>t.group==="Liabilities").map(t=>t.close)));
+  const equity=Math.abs(sum(tb.filter(t=>t.group==="Equity").map(t=>t.close)));
+  const ap=Math.abs(sum(tb.filter(t=>t.title==="SUNDRY CREDITORS"||t.title==="OTHER PAYABLES").map(t=>t.close)));
+  const ca=sum(tb.filter(t=>t.type==="Current Asset").map(t=>t.close));
+  const cl=Math.abs(sum(tb.filter(t=>t.type==="Current Liability").map(t=>t.close)));
+
+  const U=`<span class="u">${uLabel()}</span>`;
+  document.getElementById('cards').innerHTML=`
+    <div class="card pos"><div class="k">Total Revenue</div><div class="v">${money(revenue)}${U}</div><div class="sub">Gross margin ${gm.toFixed(1)}%</div></div>
+    <div class="card ${netProfit>=0?'pos':'neg'}"><div class="k">Net Profit</div><div class="v">${money(netProfit)}${U}</div><div class="sub">Net margin ${margin.toFixed(1)}%</div></div>
+    <div class="card"><div class="k">Net Receivables</div><div class="v">${money(arNet)}${U}</div><div class="sub">${arNet?(arOverdue/arNet*100).toFixed(1):0}% overdue 90+</div></div>
+    <div class="card warn"><div class="k">Inventory Value</div><div class="v">${money(invTotal)}${U}</div><div class="sub">${invTotal?(invSlow/invTotal*100).toFixed(1):0}% over 90 days</div></div>
+    <div class="card ${expenseTotal<=revenue?'pos':'neg'}"><div class="k">Total Expense</div><div class="v">${money(expenseTotal)}${U}</div><div class="sub">COGS ${money(cogs)} · Opex ${money(opex)}</div></div>`;
+
+  /* working capital KPIs — YTD flows (Closing) over lapsed days since FY start */
+  const lapsed=(DB.meta.lapsedDays&&DB.meta.lapsedDays[activePeriod])||days;
+  document.getElementById('elapsedBadge').textContent=lapsed+' d';
+  const revYTD=-sum(tb.filter(t=>t.group==="Revenue").map(t=>t.close));
+  const cogsYTD=sum(tb.filter(t=>t.type==="COGS").map(t=>t.close));
+  const dso=revYTD?arNet*lapsed/revYTD:0;
+  const dio=cogsYTD?invTotal*lapsed/cogsYTD:0;
+  const dpo=cogsYTD?ap*lapsed/cogsYTD:0;
+  const ccc=dso+dio-dpo;
+  const invTurn=invTotal?cogsYTD/invTotal*(365/lapsed):0;
+  const arTurn=arNet?revYTD/arNet*(365/lapsed):0;
+  const kc=(k,v,n,tone)=>{const col=tone==='pos'?css('--pos'):tone==='neg'?css('--neg'):tone==='warn'?css('--warn'):css('--ink');
+    return `<div class="kpi"><div class="k">${k}</div><div class="v" style="color:${col}">${v}</div><div class="n" style="color:${col}">${n}</div></div>`;}
+  document.getElementById('kpis').innerHTML=
+    kc('DSO',dso.toFixed(0)+'d','Collection period',dso<=60?'pos':dso<=90?'':'warn')+
+    kc('DIO',dio.toFixed(0)+'d','Days inventory held',dio<=90?'pos':dio<=180?'':'warn')+
+    kc('DPO',dpo.toFixed(0)+'d','Days payable',dpo>=dso?'pos':'')+
+    kc('Cash cycle',ccc.toFixed(0)+'d',ccc<0?'Cash-positive':'Cash tied up',ccc<=30?'pos':ccc<=90?'':'warn')+
+    kc('Inv turnover',invTurn.toFixed(1)+'x','Annualised',invTurn>=4?'pos':'warn')+
+    kc('AR turnover',arTurn.toFixed(1)+'x','Annualised',arTurn>=4?'pos':'warn');
+  const kpisEl=document.getElementById('kpis');
+  let note=document.getElementById('kpiNote');
+  if(!note){note=document.createElement('div');note.id='kpiNote';
+    note.style.cssText='grid-column:1/-1;font-size:11px;color:var(--faint);margin-top:-2px;line-height:1.6';
+    kpisEl.after(note);}
+  note.innerHTML=`Computed on year-to-date flows over <b>${lapsed} days elapsed</b> since fiscal-year start (${(DB.meta.fyStart&&DB.meta.fyStart[activePeriod])||'—'}). DSO &amp; DIO are <b>blended averages</b> &mdash; read them with the aging charts below, which show how much is genuinely overdue or slow-moving.`;
+
+  /* P&L */
+  draw('plBar',{type:'bar',data:{labels:['Revenue','COGS','Opex','Net Profit'],datasets:[{data:[revenue,cogs,opex,netProfit],backgroundColor:[css('--pos'),css('--neg'),css('--c5'),css('--accent')],borderRadius:7,maxBarThickness:70}]},options:{plugins:{legend:{display:false},tooltip:tip()},scales:{y:yMoney,x:xClean}}});
+  const exp=tb.filter(t=>t.group==="Expense").sort((a,b)=>b.close-a.close);
+  draw('expDonut',{type:'doughnut',data:{labels:exp.map(e=>e.title.replace(/EXPENSES?/i,'').trim()||e.title),datasets:[{data:exp.map(e=>e.close),backgroundColor:PALETTE,borderColor:css('--panel'),borderWidth:2}]},options:{cutout:'60%',plugins:{legend:{position:'right',labels:{boxWidth:9,padding:7,font:{size:10}}},tooltip:tip(c=>c.label+': ')}}});
+
+  /* position */
+  const bg=["Assets","Liabilities","Equity"],bv=[assets,liab,equity].map(Math.abs);
+  draw('bsDonut',{type:'doughnut',data:{labels:bg,datasets:[{data:bv,backgroundColor:[css('--c2'),css('--c4'),css('--c3')],borderColor:css('--panel'),borderWidth:2}]},options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{boxWidth:9,padding:9}},tooltip:tip(c=>c.label+': ')}}});
+  draw('alBar',{type:'bar',data:{labels:['Assets','Liabilities','Equity'],datasets:[{data:[assets,liab,equity],backgroundColor:[css('--c2'),css('--c4'),css('--c3')],borderRadius:7,maxBarThickness:64}]},options:{plugins:{legend:{display:false},tooltip:tip()},scales:{y:yMoney,x:xClean}}});
+  const curRatio=cl?ca/cl:0, quick=cl?(ca-invTotal)/cl:0, de=equity?liab/equity:0;
+  const ratio=(label,val,tone,note)=>{const col=tone==='pos'?css('--pos'):tone==='neg'?css('--neg'):css('--warn');return `<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:11px 0"><div><div style="font-size:12px;color:var(--muted)">${label}</div><div style="font-size:11px;color:${col}">${note}</div></div><div style="font-size:21px;font-weight:700;color:${col};font-variant-numeric:tabular-nums">${val}</div></div>`;};
+  document.getElementById('ratios').innerHTML=`<div style="margin-top:2px">`+
+    ratio('Current ratio',curRatio.toFixed(2),curRatio>=1?'pos':'neg',curRatio>=1?'Healthy (>1)':'Tight (<1)')+
+    ratio('Quick ratio',quick.toFixed(2),quick>=1?'pos':'warn',quick>=1?'Strong':'Inventory-reliant')+
+    ratio('Debt to equity',de.toFixed(2),de<=2?'pos':'warn',de<=2?'Manageable':'Elevated')+`</div>`;
+
+  /* AR */
+  const bandLabels=DB.meta.bandLabels;
+  const bandVals=bandLabels.map((_,i)=>sum(ar.map(a=>a.bands[i])));
+  document.getElementById('arTag').textContent=activeAgent==="All"?"Net due across aging bands — all agents":"Net due — "+activeAgent;
+  draw('arBar',{type:'bar',data:{labels:bandLabels,datasets:[{data:bandVals,backgroundColor:[css('--c2'),css('--accent'),css('--c5'),css('--neg')],borderRadius:7,maxBarThickness:64}]},options:{plugins:{legend:{display:false},tooltip:tip()},scales:{y:yMoney,x:xClean}}});
+  const top=[...arAll].sort((a,b)=>b.netdue-a.netdue).slice(0,10);
+  draw('agentBar',{type:'bar',data:{labels:top.map(a=>shortName(a.agent)),datasets:[{data:top.map(a=>a.netdue),backgroundColor:top.map(a=>a.agent===activeAgent?css('--accent'):css('--c2')),borderRadius:6,maxBarThickness:26}]},options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:tip(c=>top[c.dataIndex].agent+': ')},scales:{x:yMoney,y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+  const ab=document.querySelector('#agentTable tbody');ab.innerHTML="";
+  [...ar].sort((a,b)=>b.netdue-a.netdue).forEach(a=>{const od=a.bands[2]+a.bands[3];ab.innerHTML+=`<tr><td>${a.agent}</td><td class="dim">${a.cust}</td><td>${money(a.bands[0])}</td><td style="color:${od>0?css('--neg'):'inherit'}">${money(od)}</td><td><b>${money(a.netdue)}</b></td></tr>`;});
+
+  /* Inventory */
+  if(invAll.length){
+    const ic=[...invAll].sort((a,b)=>b.total-a.total);
+    draw('invDonut',{type:'doughnut',data:{labels:ic.map(i=>i.cat),datasets:[{data:ic.map(i=>i.total),backgroundColor:PALETTE,borderColor:css('--panel'),borderWidth:2}]},options:{cutout:'58%',plugins:{legend:{position:'right',labels:{boxWidth:9,padding:6,font:{size:9.5}}},tooltip:tip(c=>c.label+': ')}}});
+    const il=DB.meta.invBucketLabels;
+    const iv=il.map((_,i)=>sum(invAll.map(it=>it.buckets[i])));
+    draw('invBar',{type:'bar',data:{labels:il,datasets:[{data:iv,backgroundColor:[css('--c1'),css('--c2'),css('--c5'),css('--neg')],borderRadius:7,maxBarThickness:70}]},options:{plugins:{legend:{display:false},tooltip:tip()},scales:{y:yMoney,x:xClean}}});
+    const it=document.querySelector('#invTable tbody');it.innerHTML="";
+    ic.forEach(i=>{it.innerHTML+=`<tr><td>${i.cat}</td><td class="dim">${i.items}</td><td>${money(i.buckets[0])}</td><td>${money(i.buckets[1])}</td><td>${money(i.buckets[2])}</td><td style="color:${css('--neg')}">${money(i.buckets[3])}</td><td><b>${money(i.total)}</b></td></tr>`;});
+  }
+
+  document.getElementById('foot').innerHTML=`Source: MOSData workbook · TrialBal, ARAging, InvtAging · Period ${activePeriod} · Figures in ${unit==='full'?'NPR':unit.charAt(0).toUpperCase()+unit.slice(1)+' (NPR)'}<br>Append a new period to add data; re-import a period to replace it. Efficiency KPIs use ${lapsed} days elapsed since fiscal-year start.`;
+}
+function setUnit(u){unit=u;document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('on',b.dataset.u===u));render();}
+async function init(){
+  DB=await loadData();
+  activePeriod=DB.meta.periods[DB.meta.periods.length-1];
+  fillSelect(document.getElementById('periodSel'),DB.meta.periods,activePeriod);
+  document.getElementById('periodSel').onchange=e=>{activePeriod=e.target.value;activeAgent="All";render();};
+  document.getElementById('agentSel').onchange=e=>{activeAgent=e.target.value;render();};
+  document.querySelectorAll('#unitToggle button').forEach(b=>b.onclick=()=>setUnit(b.dataset.u));
+  const rb=document.getElementById('resetBtn');
+  if(rb) rb.onclick=()=>{activePeriod=DB.meta.periods[DB.meta.periods.length-1];activeAgent="All";unit="crore";
+    document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('on',b.dataset.u==='crore'));
+    fillSelect(document.getElementById('periodSel'),DB.meta.periods,activePeriod);render();};
+  const lo=document.getElementById('logoutBtn');
+  if(lo) lo.onclick=()=>{ sessionStorage.removeItem('mos_auth'); location.reload(); };
+  const df=document.getElementById('dataFile');
+  if(df) df.onchange=e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();
+    fr.onload=ev=>{try{const j=JSON.parse(ev.target.result);if(!j.meta||!j.trial)throw 0;
+      DB=j;activePeriod=DB.meta.periods[DB.meta.periods.length-1];activeAgent="All";
+      fillSelect(document.getElementById('periodSel'),DB.meta.periods,activePeriod);render();}
+      catch(err){alert('That file is not a valid mosdata.json');}};
+    fr.readAsText(f);};
+  render();
+}
+window.addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
+/* init() is called by showApp() after successful login (see LOGIN GATE above) */
+
+</script>
+</body>
+</html>

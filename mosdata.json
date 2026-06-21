@@ -1,0 +1,866 @@
+{
+ "meta": {
+  "periods": [
+   "2026-06-30"
+  ],
+  "currency": "NPR",
+  "unit": "crore",
+  "bandLabels": [
+   "Current",
+   "1–90",
+   "91–360",
+   "360+"
+  ],
+  "invBucketLabels": [
+   "0–30",
+   "30–60",
+   "60–90",
+   "Over 90"
+  ],
+  "periodDays": {
+   "2026-06-30": 30
+  },
+  "flags": [
+   {
+    "desc": "ACER ODD 13 2025",
+    "qty": 2,
+    "value": 121090384
+   }
+  ],
+  "fyStart": {
+   "2026-06-30": "2025-07-14"
+  },
+  "lapsedDays": {
+   "2026-06-30": 351
+  }
+ },
+ "trial": [
+  {
+   "date": "2026-06-30",
+   "acc": "6010",
+   "title": "ADMINISTRATIVE EXPENSES",
+   "group": "Expense",
+   "type": "Operating Expense",
+   "open": 0,
+   "dr": 22166401.62,
+   "cr": 182167.61,
+   "close": 21984234.01
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1030",
+   "title": "BALANCE IN BANK",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": -23227538.79,
+   "dr": 2712723113.18,
+   "cr": 2701526194.52,
+   "close": -12030620.13
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1040",
+   "title": "BANK GUARANTEE",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 591047.52,
+   "dr": 1407967.5,
+   "cr": 1690731.25,
+   "close": 308283.77
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1010",
+   "title": "CASH & BANK",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": -71021.6,
+   "dr": 20012043.9,
+   "cr": 19690147.81,
+   "close": 250874.49
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1020",
+   "title": "CASH IN HAND",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 625516.03,
+   "dr": 8084106,
+   "cr": 8290994.98,
+   "close": 418627.05
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "5000",
+   "title": "COST OF GOODS SOLD",
+   "group": "Expense",
+   "type": "COGS",
+   "open": 0,
+   "dr": 330375673.87,
+   "cr": 0,
+   "close": 330375673.87
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2110",
+   "title": "DEMAND LOAN",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": -211159656.83,
+   "dr": 410785221.09,
+   "cr": 257285493.12,
+   "close": -57659928.86
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1130",
+   "title": "DEPOSIT",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 5700506.65,
+   "dr": 0,
+   "cr": 0,
+   "close": 5700506.65
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2530",
+   "title": "DIRECTORS LOAN",
+   "group": "Liabilities",
+   "type": "Long Term Liability",
+   "open": 0,
+   "dr": 68596691.42,
+   "cr": 119252458.33,
+   "close": -50655766.91
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "6050",
+   "title": "EXPENDITURE",
+   "group": "Expense",
+   "type": "Operating Expense",
+   "open": 0,
+   "dr": 235529584.64,
+   "cr": 1151.62,
+   "close": 235528433.02
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2520",
+   "title": "HIRE PURCHASE LOAN",
+   "group": "Liabilities",
+   "type": "Long Term Liability",
+   "open": -3321214.26,
+   "dr": 484687.71,
+   "cr": 0,
+   "close": -2836526.55
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "4100",
+   "title": "INCOME",
+   "group": "Revenue",
+   "type": "Operating Income",
+   "open": 0,
+   "dr": 44.41,
+   "cr": 220451043.87,
+   "close": -220450999.46
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1200",
+   "title": "INTER COMPANY BALANCE",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 109304320.33,
+   "dr": 51850282,
+   "cr": 195800000,
+   "close": -34645397.67
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "6100",
+   "title": "LESS FINANCING COST",
+   "group": "Expense",
+   "type": "Finance Cost",
+   "open": 0,
+   "dr": 30049410.79,
+   "cr": 4167.93,
+   "close": 30045242.86
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1050",
+   "title": "LETTER OF CREDIT",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 10329141.06,
+   "dr": 353639772.87,
+   "cr": 37612439.43,
+   "close": 326356474.5
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2040",
+   "title": "LIABILITIES",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": -10000000,
+   "dr": 0,
+   "cr": 0,
+   "close": -10000000
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1120",
+   "title": "LOANS & ADVANCE",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 13593517.28,
+   "dr": 260400.95,
+   "cr": 750,
+   "close": 13853168.23
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2020",
+   "title": "OTHER PAYABLES",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": -1391813.55,
+   "dr": 17777080.28,
+   "cr": 19539373.14,
+   "close": -3154106.41
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1110",
+   "title": "OTHER RECEIVABLES",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 11245674.15,
+   "dr": 78263703.08,
+   "cr": 2344072.07,
+   "close": 87165305.16
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "6020",
+   "title": "PAYROLL RELATED EXPENSES",
+   "group": "Expense",
+   "type": "Operating Expense",
+   "open": 0,
+   "dr": 25621404.31,
+   "cr": 228812.58,
+   "close": 25392591.73
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1500",
+   "title": "PROPERTY, PLANT & EQUIPMENT",
+   "group": "Assets",
+   "type": "Fixed Asset",
+   "open": 12051184.09,
+   "dr": 361608.43,
+   "cr": 0,
+   "close": 12412792.52
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1510",
+   "title": "PROPERTY, PLANT & EQUIPMENTS",
+   "group": "Assets",
+   "type": "Fixed Asset",
+   "open": 3205207.51,
+   "dr": 0,
+   "cr": 0,
+   "close": 3205207.51
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "3100",
+   "title": "RESERVE & SERPLUS",
+   "group": "Equity",
+   "type": "Equity",
+   "open": -193802238.23,
+   "dr": 0,
+   "cr": 0,
+   "close": -193802238.23
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "4000",
+   "title": "REVENUE",
+   "group": "Revenue",
+   "type": "Operating Income",
+   "open": 0,
+   "dr": 40342708.13,
+   "cr": 376573152.81,
+   "close": -336230444.68
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "6030",
+   "title": "SALES & MARKETING EXPENSES",
+   "group": "Expense",
+   "type": "Operating Expense",
+   "open": 0,
+   "dr": 4970079.32,
+   "cr": 0,
+   "close": 4970079.32
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2120",
+   "title": "SHORT TERM LOAN",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": -180496000,
+   "dr": 278865908.31,
+   "cr": 298150000,
+   "close": -199780091.69
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2030",
+   "title": "STATUTORY LIABILITES",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": -4636885.92,
+   "dr": 17460740.62,
+   "cr": 81115084.36,
+   "close": -68291229.66
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2010",
+   "title": "SUNDRY CREDITORS",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": 21521331.53,
+   "dr": 269033531.46,
+   "cr": 698276337.22,
+   "close": -407721474.23
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "1100",
+   "title": "SUNDRY DEBTORS",
+   "group": "Assets",
+   "type": "Current Asset",
+   "open": 106617499.37,
+   "dr": 654233136.31,
+   "cr": 593685786.44,
+   "close": 167164849.24
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2510",
+   "title": "TERM LOAN",
+   "group": "Liabilities",
+   "type": "Long Term Liability",
+   "open": -42878429.18,
+   "dr": 276849489.65,
+   "cr": 275652454.62,
+   "close": -41681394.15
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "6040",
+   "title": "TRAVELLING EXPENSES",
+   "group": "Expense",
+   "type": "Operating Expense",
+   "open": 0,
+   "dr": 633265.19,
+   "cr": 0,
+   "close": 633265.19
+  },
+  {
+   "date": "2026-06-30",
+   "acc": "2130",
+   "title": "USANCE LOAN",
+   "group": "Liabilities",
+   "type": "Current Liability",
+   "open": -4685755.08,
+   "dr": 133154629.59,
+   "cr": 136179872.92,
+   "close": -7710998.41
+  }
+ ],
+ "ar": [
+  {
+   "date": "2026-06-30",
+   "agent": "BIJAY KUMAR SHRESTHA",
+   "cust": 85,
+   "collection": 1273794.78,
+   "netdue": 49986074.28,
+   "bands": [
+    0,
+    44751257.92,
+    4416123.47,
+    818692.89
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "Dinesh KC",
+   "cust": 32,
+   "collection": 1951000,
+   "netdue": 27861100.75,
+   "bands": [
+    0,
+    25514370.86,
+    2260516.28,
+    86213.61
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "BABITA TIMALSINA",
+   "cust": 34,
+   "collection": 1344325,
+   "netdue": 18972788.28,
+   "bands": [
+    0,
+    17694996.43,
+    1243688,
+    34103.85
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "PRAKASH GYAWALI",
+   "cust": 45,
+   "collection": 22694.7,
+   "netdue": 10300998.31,
+   "bands": [
+    0,
+    10485.3,
+    1000,
+    10289513.01
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SURAJ B. CHHETRI",
+   "cust": 1,
+   "collection": 0,
+   "netdue": 9314498.93,
+   "bands": [
+    0,
+    9314498.93,
+    0,
+    0
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SHOWROOM",
+   "cust": 86,
+   "collection": 112099.38,
+   "netdue": 8219977.77,
+   "bands": [
+    0,
+    1050875.61,
+    2791304.1,
+    4377798.06
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "(Unassigned)",
+   "cust": 24,
+   "collection": 0,
+   "netdue": 6664985.16,
+   "bands": [
+    0,
+    811425.04,
+    857091.97,
+    4996468.15
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "UTSAV SHUMSHER THAPA",
+   "cust": 11,
+   "collection": 29500,
+   "netdue": 4305260.18,
+   "bands": [
+    0,
+    4303800,
+    1460.18,
+    0
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "KARNA PRASAD PARAJULI",
+   "cust": 33,
+   "collection": 0,
+   "netdue": 3899830.24,
+   "bands": [
+    0,
+    62500,
+    137944.95,
+    3699385.29
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SURAJ BASNET",
+   "cust": 16,
+   "collection": 0,
+   "netdue": 3687324.72,
+   "bands": [
+    0,
+    0,
+    0,
+    3687324.72
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "BHIMSEN BASNET",
+   "cust": 7,
+   "collection": 400000,
+   "netdue": 2172500,
+   "bands": [
+    0,
+    2172500,
+    0,
+    0
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OLD",
+   "cust": 44,
+   "collection": 0,
+   "netdue": 1905925.19,
+   "bands": [
+    0,
+    0,
+    0,
+    1905925.19
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OLD-RAJ",
+   "cust": 24,
+   "collection": 0,
+   "netdue": 1402194.52,
+   "bands": [
+    0,
+    0,
+    0,
+    1402194.52
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OLD-KABIN",
+   "cust": 1,
+   "collection": 0,
+   "netdue": 491883,
+   "bands": [
+    0,
+    0,
+    0,
+    491883
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OFFICE",
+   "cust": 1,
+   "collection": 0,
+   "netdue": 380420,
+   "bands": [
+    0,
+    4220,
+    0,
+    376200
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "BIKRAM RAJBHANDARI",
+   "cust": 9,
+   "collection": 0,
+   "netdue": 350666.91,
+   "bands": [
+    0,
+    0,
+    0,
+    350666.91
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "CHET NATH GURAGAIN",
+   "cust": 3,
+   "collection": 0,
+   "netdue": 288462.18,
+   "bands": [
+    0,
+    0,
+    0,
+    288462.18
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "MARKETING",
+   "cust": 8,
+   "collection": 0,
+   "netdue": 250846.15,
+   "bands": [
+    0,
+    56740,
+    9530,
+    184576.15
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SHANKAR RAJ GURAGAIN",
+   "cust": 4,
+   "collection": 0,
+   "netdue": 239011.47,
+   "bands": [
+    0,
+    212400,
+    290,
+    26321.47
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OLD-HIMAL",
+   "cust": 1,
+   "collection": 0,
+   "netdue": 179500,
+   "bands": [
+    0,
+    0,
+    0,
+    179500
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "BIBEK HADA",
+   "cust": 5,
+   "collection": 0,
+   "netdue": 158829.98,
+   "bands": [
+    0,
+    0,
+    0,
+    158829.98
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OLD-JITEN",
+   "cust": 1,
+   "collection": 0,
+   "netdue": 89863.73,
+   "bands": [
+    0,
+    0,
+    0,
+    89863.73
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SUBASH KUNWAR",
+   "cust": 2,
+   "collection": 0,
+   "netdue": 81769.97,
+   "bands": [
+    0,
+    0,
+    0,
+    81769.97
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SABINA PRADHAN",
+   "cust": 3,
+   "collection": 0,
+   "netdue": 71601.8,
+   "bands": [
+    0,
+    0,
+    17601.8,
+    54000
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "Suzita",
+   "cust": 3,
+   "collection": 0,
+   "netdue": 41759.9,
+   "bands": [
+    0,
+    32960,
+    8799.9,
+    0
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "OLD-SUNNY",
+   "cust": 2,
+   "collection": 0,
+   "netdue": 41512.95,
+   "bands": [
+    0,
+    0,
+    0,
+    41512.95
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "agent": "SATISH THANI",
+   "cust": 1,
+   "collection": 0,
+   "netdue": 33000,
+   "bands": [
+    0,
+    0,
+    0,
+    33000
+   ]
+  }
+ ],
+ "inv": [
+  {
+   "date": "2026-06-30",
+   "cat": "Other",
+   "items": 588,
+   "buckets": [
+    140656.3,
+    605706.38,
+    28292.18,
+    131869600.72
+   ],
+   "total": 132644255.58
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Printers & Consumables",
+   "items": 687,
+   "buckets": [
+    5037149.61,
+    24732288.1,
+    37266725.39,
+    57377599.77
+   ],
+   "total": 124413762.87
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Systems & Devices",
+   "items": 372,
+   "buckets": [
+    24073950.56,
+    1490614.32,
+    289115.04,
+    31047904.6
+   ],
+   "total": 56901584.52
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Monitors & Displays",
+   "items": 24,
+   "buckets": [
+    58442.59,
+    4438643.89,
+    0,
+    2117394.61
+   ],
+   "total": 6614481.09
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Networking",
+   "items": 81,
+   "buckets": [
+    0,
+    0,
+    0,
+    5200134.5
+   ],
+   "total": 5200134.5
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Components & Parts",
+   "items": 207,
+   "buckets": [
+    31198.19,
+    0,
+    0,
+    5135441.2
+   ],
+   "total": 5166639.39
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Peripherals",
+   "items": 65,
+   "buckets": [
+    22644.82,
+    0,
+    0,
+    4901142.02
+   ],
+   "total": 4923786.84
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Cables & Adaptors",
+   "items": 79,
+   "buckets": [
+    50616.84,
+    8332.41,
+    0,
+    2404411
+   ],
+   "total": 2463360.25
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Storage",
+   "items": 6,
+   "buckets": [
+    0,
+    0,
+    0,
+    290441.5
+   ],
+   "total": 290441.5
+  },
+  {
+   "date": "2026-06-30",
+   "cat": "Memory (RAM)",
+   "items": 3,
+   "buckets": [
+    0,
+    0,
+    0,
+    75000.87
+   ],
+   "total": 75000.87
+  }
+ ]
+}
