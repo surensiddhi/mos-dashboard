@@ -118,7 +118,7 @@
     <div class="fgroup"><span class="lbl">Data as on</span><span id="asOnStamp" style="font-size:13px;font-weight:600;color:var(--ink)">—</span></div>
     <div class="fgroup" style="margin-left:auto"><span class="lbl">Days elapsed</span><span id="elapsedBadge" style="background:var(--panel);border:1px solid var(--line);color:var(--accent);padding:7px 13px;border-radius:9px;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">—</span></div>
     <button id="resetBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Reset filters</button>
-    <label class="fgroup" style="cursor:pointer"><span class="lbl" style="color:var(--accent)">↻ Load data file</span><input type="file" id="dataFile" accept=".json" style="display:none"></label>
+    <label id="loadDataWrap" class="fgroup" style="cursor:pointer;display:none"><span class="lbl" style="color:var(--accent)">↻ Load data file</span><input type="file" id="dataFile" accept=".json" style="display:none"></label>
     <button id="logoutBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Sign out</button>
   </div>
 </div></div>
@@ -192,6 +192,7 @@
 window.SALT = window.SALT || 'MOS-2026-board-x7q';
 window.SESSION_HOURS = window.SESSION_HOURS || 12;
 window.USERS = window.USERS || {};
+window.ADMINS = window.ADMINS || [];
 const SALT = window.SALT, SESSION_HOURS = window.SESSION_HOURS, USERS = window.USERS;
 async function sha256(s){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
@@ -205,6 +206,14 @@ function showApp(){
   document.getElementById('loginGate').style.display='none';
   document.getElementById('appWrap').style.display='';
   var cy=document.getElementById('copyYear'); if(cy) cy.textContent=new Date().getFullYear();
+  // show admin-only controls (e.g. Load data file) if the signed-in user is an admin
+  try{
+    var s=JSON.parse(sessionStorage.getItem('mos_auth')||'null');
+    var admins=window.ADMINS||[];
+    var isAdmin=s && admins.indexOf(s.u)!==-1;
+    var lw=document.getElementById('loadDataWrap');
+    if(lw) lw.style.display=isAdmin?'':'none';
+  }catch(e){}
   if(!window.__started){ window.__started=true; init(); }
 }
 async function tryLogin(){
