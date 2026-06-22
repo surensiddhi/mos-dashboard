@@ -32,3 +32,6 @@ window.USERS = {
   "suresh":"10a279ee6b638612c345de267d7e2a04999839f69e38173f58eaec843bf1e35a",
   "esha":"3bffe1ec4486df0aa13dcabafb1ac99179806fcec1b3e7bc7830a4f9cf59f0af"
 };
+
+window.ADMINS = ["suren"];
+
