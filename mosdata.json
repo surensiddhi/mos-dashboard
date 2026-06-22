@@ -1,7 +1,7 @@
 {
  "meta": {
   "periods": [
-   "2026-06-30"
+   "2026-06-22"
   ],
   "currency": "NPR",
   "unit": "crore",
@@ -18,7 +18,7 @@
    "Over 90"
   ],
   "periodDays": {
-   "2026-06-30": 30
+   "2026-06-22": 30
   },
   "flags": [
    {
@@ -28,15 +28,15 @@
    }
   ],
   "fyStart": {
-   "2026-06-30": "2025-07-14"
+   "2026-06-22": "2025-07-14"
   },
   "lapsedDays": {
-   "2026-06-30": 351
+   "2026-06-22": 343
   }
  },
  "trial": [
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "6010",
    "title": "ADMINISTRATIVE EXPENSES",
    "group": "Expense",
@@ -47,7 +47,7 @@
    "close": 21984234.01
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1030",
    "title": "BALANCE IN BANK",
    "group": "Assets",
@@ -58,7 +58,7 @@
    "close": -12030620.13
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1040",
    "title": "BANK GUARANTEE",
    "group": "Assets",
@@ -69,7 +69,7 @@
    "close": 308283.77
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1010",
    "title": "CASH & BANK",
    "group": "Assets",
@@ -80,7 +80,7 @@
    "close": 250874.49
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1020",
    "title": "CASH IN HAND",
    "group": "Assets",
@@ -91,7 +91,7 @@
    "close": 418627.05
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "5000",
    "title": "COST OF GOODS SOLD",
    "group": "Expense",
@@ -102,7 +102,7 @@
    "close": 330375673.87
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2110",
    "title": "DEMAND LOAN",
    "group": "Liabilities",
@@ -113,7 +113,7 @@
    "close": -57659928.86
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1130",
    "title": "DEPOSIT",
    "group": "Assets",
@@ -124,7 +124,7 @@
    "close": 5700506.65
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2530",
    "title": "DIRECTORS LOAN",
    "group": "Liabilities",
@@ -135,7 +135,7 @@
    "close": -50655766.91
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "6050",
    "title": "EXPENDITURE",
    "group": "Expense",
@@ -146,7 +146,7 @@
    "close": 235528433.02
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2520",
    "title": "HIRE PURCHASE LOAN",
    "group": "Liabilities",
@@ -157,7 +157,7 @@
    "close": -2836526.55
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "4100",
    "title": "INCOME",
    "group": "Revenue",
@@ -168,7 +168,7 @@
    "close": -220450999.46
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1200",
    "title": "INTER COMPANY BALANCE",
    "group": "Assets",
@@ -179,7 +179,7 @@
    "close": -34645397.67
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "6100",
    "title": "LESS FINANCING COST",
    "group": "Expense",
@@ -190,7 +190,7 @@
    "close": 30045242.86
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1050",
    "title": "LETTER OF CREDIT",
    "group": "Assets",
@@ -201,7 +201,7 @@
    "close": 326356474.5
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2040",
    "title": "LIABILITIES",
    "group": "Liabilities",
@@ -212,7 +212,7 @@
    "close": -10000000
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1120",
    "title": "LOANS & ADVANCE",
    "group": "Assets",
@@ -223,7 +223,7 @@
    "close": 13853168.23
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2020",
    "title": "OTHER PAYABLES",
    "group": "Liabilities",
@@ -234,7 +234,7 @@
    "close": -3154106.41
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1110",
    "title": "OTHER RECEIVABLES",
    "group": "Assets",
@@ -245,7 +245,7 @@
    "close": 87165305.16
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "6020",
    "title": "PAYROLL RELATED EXPENSES",
    "group": "Expense",
@@ -256,7 +256,7 @@
    "close": 25392591.73
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1500",
    "title": "PROPERTY, PLANT & EQUIPMENT",
    "group": "Assets",
@@ -267,7 +267,7 @@
    "close": 12412792.52
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1510",
    "title": "PROPERTY, PLANT & EQUIPMENTS",
    "group": "Assets",
@@ -278,7 +278,7 @@
    "close": 3205207.51
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "3100",
    "title": "RESERVE & SERPLUS",
    "group": "Equity",
@@ -289,7 +289,7 @@
    "close": -193802238.23
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "4000",
    "title": "REVENUE",
    "group": "Revenue",
@@ -300,7 +300,7 @@
    "close": -336230444.68
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "6030",
    "title": "SALES & MARKETING EXPENSES",
    "group": "Expense",
@@ -311,7 +311,7 @@
    "close": 4970079.32
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2120",
    "title": "SHORT TERM LOAN",
    "group": "Liabilities",
@@ -322,7 +322,7 @@
    "close": -199780091.69
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2030",
    "title": "STATUTORY LIABILITES",
    "group": "Liabilities",
@@ -333,7 +333,7 @@
    "close": -68291229.66
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2010",
    "title": "SUNDRY CREDITORS",
    "group": "Liabilities",
@@ -344,7 +344,7 @@
    "close": -407721474.23
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "1100",
    "title": "SUNDRY DEBTORS",
    "group": "Assets",
@@ -355,7 +355,7 @@
    "close": 167164849.24
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2510",
    "title": "TERM LOAN",
    "group": "Liabilities",
@@ -366,7 +366,7 @@
    "close": -41681394.15
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "6040",
    "title": "TRAVELLING EXPENSES",
    "group": "Expense",
@@ -377,7 +377,7 @@
    "close": 633265.19
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "acc": "2130",
    "title": "USANCE LOAN",
    "group": "Liabilities",
@@ -390,7 +390,7 @@
  ],
  "ar": [
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "BIJAY KUMAR SHRESTHA",
    "cust": 85,
    "collection": 1273794.78,
@@ -403,7 +403,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "Dinesh KC",
    "cust": 32,
    "collection": 1951000,
@@ -416,7 +416,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "BABITA TIMALSINA",
    "cust": 34,
    "collection": 1344325,
@@ -429,7 +429,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "PRAKASH GYAWALI",
    "cust": 45,
    "collection": 22694.7,
@@ -442,7 +442,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SURAJ B. CHHETRI",
    "cust": 1,
    "collection": 0,
@@ -455,7 +455,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SHOWROOM",
    "cust": 86,
    "collection": 112099.38,
@@ -468,7 +468,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "(Unassigned)",
    "cust": 24,
    "collection": 0,
@@ -481,7 +481,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "UTSAV SHUMSHER THAPA",
    "cust": 11,
    "collection": 29500,
@@ -494,7 +494,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "KARNA PRASAD PARAJULI",
    "cust": 33,
    "collection": 0,
@@ -507,7 +507,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SURAJ BASNET",
    "cust": 16,
    "collection": 0,
@@ -520,7 +520,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "BHIMSEN BASNET",
    "cust": 7,
    "collection": 400000,
@@ -533,7 +533,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OLD",
    "cust": 44,
    "collection": 0,
@@ -546,7 +546,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OLD-RAJ",
    "cust": 24,
    "collection": 0,
@@ -559,7 +559,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OLD-KABIN",
    "cust": 1,
    "collection": 0,
@@ -572,7 +572,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OFFICE",
    "cust": 1,
    "collection": 0,
@@ -585,7 +585,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "BIKRAM RAJBHANDARI",
    "cust": 9,
    "collection": 0,
@@ -598,7 +598,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "CHET NATH GURAGAIN",
    "cust": 3,
    "collection": 0,
@@ -611,7 +611,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "MARKETING",
    "cust": 8,
    "collection": 0,
@@ -624,7 +624,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SHANKAR RAJ GURAGAIN",
    "cust": 4,
    "collection": 0,
@@ -637,7 +637,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OLD-HIMAL",
    "cust": 1,
    "collection": 0,
@@ -650,7 +650,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "BIBEK HADA",
    "cust": 5,
    "collection": 0,
@@ -663,7 +663,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OLD-JITEN",
    "cust": 1,
    "collection": 0,
@@ -676,7 +676,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SUBASH KUNWAR",
    "cust": 2,
    "collection": 0,
@@ -689,7 +689,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SABINA PRADHAN",
    "cust": 3,
    "collection": 0,
@@ -702,7 +702,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "Suzita",
    "cust": 3,
    "collection": 0,
@@ -715,7 +715,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "OLD-SUNNY",
    "cust": 2,
    "collection": 0,
@@ -728,7 +728,7 @@
    ]
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "agent": "SATISH THANI",
    "cust": 1,
    "collection": 0,
@@ -743,7 +743,7 @@
  ],
  "inv": [
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Other",
    "items": 588,
    "buckets": [
@@ -755,7 +755,7 @@
    "total": 132644255.58
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Printers & Consumables",
    "items": 687,
    "buckets": [
@@ -767,7 +767,7 @@
    "total": 124413762.87
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Systems & Devices",
    "items": 372,
    "buckets": [
@@ -779,7 +779,7 @@
    "total": 56901584.52
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Monitors & Displays",
    "items": 24,
    "buckets": [
@@ -791,7 +791,7 @@
    "total": 6614481.09
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Networking",
    "items": 81,
    "buckets": [
@@ -803,7 +803,7 @@
    "total": 5200134.5
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Components & Parts",
    "items": 207,
    "buckets": [
@@ -815,7 +815,7 @@
    "total": 5166639.39
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Peripherals",
    "items": 65,
    "buckets": [
@@ -827,7 +827,7 @@
    "total": 4923786.84
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Cables & Adaptors",
    "items": 79,
    "buckets": [
@@ -839,7 +839,7 @@
    "total": 2463360.25
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Storage",
    "items": 6,
    "buckets": [
@@ -851,7 +851,7 @@
    "total": 290441.5
   },
   {
-   "date": "2026-06-30",
+   "date": "2026-06-22",
    "cat": "Memory (RAM)",
    "items": 3,
    "buckets": [
@@ -861,6 +861,88 @@
     75000.87
    ],
    "total": 75000.87
+  }
+ ],
+ "sales": [
+  {
+   "date": "2026-06-22",
+   "group": "Acer Laptops",
+   "metrics": {
+    "Sales": {
+     "actual": 206000000,
+     "target": 300000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Epson Printers",
+   "metrics": {
+    "Sales": {
+     "actual": 150000000,
+     "target": 250000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Acer Desktops",
+   "metrics": {
+    "Sales": {
+     "actual": 145000000,
+     "target": 225000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Monitors & Displays",
+   "metrics": {
+    "Sales": {
+     "actual": 9000000,
+     "target": 15000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Epson Conusmables",
+   "metrics": {
+    "Sales": {
+     "actual": 7000000,
+     "target": 12000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Components & Parts",
+   "metrics": {
+    "Sales": {
+     "actual": 5100000,
+     "target": 10000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Other",
+   "metrics": {
+    "Sales": {
+     "actual": 2900000,
+     "target": 3000000
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "group": "Cables & Adaptors",
+   "metrics": {
+    "Sales": {
+     "actual": 2400000,
+     "target": 8000000
+    }
+   }
   }
  ]
 }
