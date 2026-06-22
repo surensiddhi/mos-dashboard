@@ -6,6 +6,7 @@
 <title>MOS Financial Dashboard</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="auth.js"></script>
+<script src="interpret.js"></script>
 <style>
   :root{
     --bg:#0d1620; --bg2:#101d29; --panel:#152433; --panel2:#1a2d3e;
@@ -68,8 +69,8 @@
   .foot{max-width:1240px;margin:30px auto 0;padding:18px 24px 0;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.7}
   .empty{padding:40px 20px;text-align:center;color:var(--faint);font-size:13px;border:1px dashed var(--line);border-radius:14px}
   @media(max-width:1000px){.cards{grid-template-columns:repeat(3,1fr)}.kpis{grid-template-columns:repeat(3,1fr)}.grid2,.grid3{grid-template-columns:1fr}.chartbox{height:300px}}
-  @media(max-width:560px){
-    .top{padding:14px 16px}.brand h1{font-size:17px}main{padding:18px 16px 0}
+  @media(max-width:760px){
+    .top{padding:12px 14px}.brand h1{font-size:17px}main{padding:12px 14px 0}
     /* keep title and unit toggle on ONE row, side by side */
     .brandrow{flex-wrap:nowrap;gap:10px}
     .brand{min-width:0}
@@ -78,18 +79,53 @@
     .unit{flex-shrink:0;padding:2px}
     .unit button{padding:6px 9px;font-size:11px}
     .cards{grid-template-columns:repeat(2,1fr);gap:10px}.kpis{grid-template-columns:repeat(2,1fr)}
-    .card{padding:15px 14px}.card .v{font-size:21px}
-    .chartbox,.chartbox.sm{height:260px}
-    /* filter bar: two controls per row */
-    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .card{padding:13px 13px}.card .v{font-size:20px}
+    .chartbox,.chartbox.sm{height:240px}
+    /* filter bar: two controls per row, tight */
+    .filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
     .filters>*{width:auto!important;margin:0!important;min-width:0;justify-content:space-between}
     .fgroup{justify-content:space-between}
-    .filters select{flex:1;min-width:0}
-    #elapsedBadge{min-width:0}
-    #resetBtn,#logoutBtn{width:100%}
-    .filters label.fgroup{white-space:nowrap}
+    /* filter bar: flexible wrap */
+    .filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+    .filters>.fgroup{flex:1 1 42%;min-width:0;justify-content:space-between;margin:0!important}
+    .fgroup{justify-content:space-between}
+    .filters select{flex:1;min-width:0;padding:7px 10px}
+    #elapsedBadge{min-width:0;padding:6px 11px}
+    .actbreak{display:block!important;flex-basis:100%;height:0;margin:0;padding:0;border:0}
+    /* action buttons grouped in one compact row */
+    #actionBtns{display:flex!important;gap:8px;width:100%;align-items:center;flex-wrap:nowrap}
+    #actionBtns>*{flex:0 0 auto}
+    #resetBtn,#logoutBtn{padding:7px 11px!important;font-size:11.5px;margin:0!important;white-space:nowrap}
+    #loadDataWrap{margin:0!important;align-self:center;padding:7px 0}
+    .filters label.fgroup{white-space:nowrap;flex:0 0 auto}
+    /* tighten vertical rhythm */
+    .seclabel{margin:14px 2px 8px}
+    .seclabel:first-child{margin-top:4px}
+    .flag{padding:10px 12px;margin:4px 0 0;font-size:12px}
+    .exsum{padding:14px 16px}
+    .exsum li{font-size:13.5px;line-height:1.55}
+    .panel{padding:14px 14px}
   }
   @media(max-width:360px){.cards{grid-template-columns:1fr}.brand h1{font-size:13px}.unit button{padding:6px 7px;font-size:10px}}
+  .actbreak{display:none}
+  #actionBtns{display:contents}
+  /* interpretation layer */
+  .exsum{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 22px;box-shadow:var(--shadow)}
+  .exsum .hd{display:flex;align-items:center;gap:8px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint);font-weight:600;margin-bottom:12px}
+  .exsum ul{margin:0;padding-left:20px}
+  .exsum li{font-size:14.5px;line-height:1.7;margin-bottom:5px;color:var(--ink)}
+  .verdict{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;line-height:1.6;color:var(--muted);margin-top:14px}
+  .verdict .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:0 0 auto}
+  .verdict b{font-weight:600}
+  .action{display:flex;align-items:flex-start;gap:9px;background:rgba(251,191,36,.09);border:1px solid rgba(251,191,36,.3);border-radius:10px;padding:10px 13px;margin-top:10px;font-size:13px;line-height:1.6;color:#f5d98a}
+  .action.concern{background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.32);color:#f7b0bb}
+  .vc-good{color:var(--pos)} .vc-caution{color:var(--warn)} .vc-concern{color:var(--neg)}
+  .bg-good{background:var(--pos)} .bg-caution{background:var(--warn)} .bg-concern{background:var(--neg)}
+  /* insights toggle switch */
+  .switch{width:34px;height:18px;border-radius:999px;background:var(--line);position:relative;transition:background .15s;flex:0 0 auto}
+  .switch.on{background:var(--accent)}
+  .switch .knob{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+  .switch.on .knob{left:18px}
   @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -117,14 +153,21 @@
     <div class="fgroup"><span class="lbl">Period</span><select id="periodSel"></select></div>
     <div class="fgroup"><span class="lbl">Data as on</span><span id="asOnStamp" style="font-size:13px;font-weight:600;color:var(--ink)">—</span></div>
     <div class="fgroup" style="margin-left:auto"><span class="lbl">Days elapsed</span><span id="elapsedBadge" style="background:var(--panel);border:1px solid var(--line);color:var(--accent);padding:7px 13px;border-radius:9px;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">—</span></div>
-    <button id="resetBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Reset filters</button>
-    <label id="loadDataWrap" class="fgroup" style="cursor:pointer;display:none"><span class="lbl" style="color:var(--accent)">↻ Load data file</span><input type="file" id="dataFile" accept=".json" style="display:none"></label>
-    <button id="logoutBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Sign out</button>
+    <label id="insightsToggle" class="fgroup" style="cursor:pointer;gap:7px"><span class="lbl">Insights</span><span id="insightsSwitch" class="switch on"><span class="knob"></span></span><input type="checkbox" id="insightsChk" checked style="display:none"></label>
+    <div class="actbreak"></div>
+    <div id="actionBtns"><button id="resetBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Reset filters</button><label id="loadDataWrap" class="fgroup" style="cursor:pointer;display:none"><span class="lbl" style="color:var(--accent)">↻ Load data file</span><input type="file" id="dataFile" accept=".json" style="display:none"></label><button id="logoutBtn" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 13px;border-radius:9px;font-size:12px;cursor:pointer;font-family:inherit">Sign out</button></div>
   </div>
 </div></div>
 
 <main>
   <div id="flags"></div>
+  <div id="exsumWrap" style="display:none;margin-bottom:6px">
+    <div class="seclabel" style="margin-top:6px">Board summary</div>
+    <div class="exsum">
+      <div class="hd"><span id="exsumTitle">Executive summary</span></div>
+      <ul id="exsumList"></ul>
+    </div>
+  </div>
   <div class="seclabel">Headline</div>
   <div class="cards" id="cards"></div>
 
@@ -135,6 +178,7 @@
     <div class="panel" style="margin-top:14px"><h3>Achievement detail</h3><div class="ptag">Lowest achievement first</div>
       <div class="tablewrap"><table id="salesTable"><thead><tr><th>Product Group</th><th>Sales YTD</th><th>Annual Target</th><th>Achieved %</th><th>Gap</th></tr></thead><tbody></tbody></table></div>
     </div>
+    <div id="salesAnchor"></div>
   </div>
 
   <div class="seclabel">Working capital &amp; efficiency</div>
@@ -145,6 +189,7 @@
     <div class="panel"><h3>P&amp;L summary</h3><div class="ptag">Revenue, cost and expense for the period</div><div class="chartbox"><canvas id="plBar"></canvas></div></div>
     <div class="panel"><h3>Expense breakdown</h3><div class="ptag">Share of total expense by line</div><div class="chartbox"><canvas id="expDonut"></canvas></div></div>
   </div>
+  <div id="profAnchor"></div>
 
   <div class="seclabel">Financial position</div>
   <div class="grid3">
@@ -152,6 +197,7 @@
     <div class="panel"><h3>Key ratios</h3><div class="ptag">Liquidity &amp; leverage</div><div id="ratios"></div></div>
     <div class="panel"><h3>Assets vs liabilities</h3><div class="ptag">Gross position</div><div class="chartbox sm"><canvas id="alBar"></canvas></div></div>
   </div>
+  <div id="liqAnchor"></div>
 
   <div class="seclabel" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
     <span>Receivables</span>
@@ -167,6 +213,7 @@
   <div class="panel" style="margin-top:14px"><h3>Agent detail</h3><div class="ptag">Net due, overdue and collection by agent</div>
     <div class="tablewrap"><table id="agentTable"><thead><tr><th>Agent</th><th>Customers</th><th>Current</th><th>Overdue 90+</th><th>Net Due</th></tr></thead><tbody></tbody></table></div>
   </div>
+  <div id="recvAnchor"></div>
 
   <div class="seclabel">Inventory</div>
   <div class="grid2">
@@ -176,6 +223,7 @@
   <div class="panel" style="margin-top:14px"><h3>Category detail</h3><div class="ptag">Stock value and slow-moving (Over 90) by category</div>
     <div class="tablewrap"><table id="invTable"><thead><tr><th>Category</th><th>Items</th><th>0–30</th><th>30–60</th><th>60–90</th><th>Over 90</th><th>Total</th></tr></thead><tbody></tbody></table></div>
   </div>
+  <div id="invAnchor"></div>
 </main>
 <div class="foot" id="foot"></div>
 <div style="max-width:1240px;margin:10px auto 0;padding:0 24px;font-size:11px;color:var(--faint);text-align:center">
@@ -246,7 +294,7 @@ async function loadData(){
   return EMBEDDED;
 }
 
-let DB=null, unit="crore", activePeriod=null, activeAgent="All";
+let DB=null, unit="crore", activePeriod=null, activeAgent="All", showInsights=true;
 const UNIT_DIV={crore:1e7, lakh:1e5, full:1};
 const UNIT_LABEL={crore:"Cr", lakh:"L", full:""};
 function groupIN(x){const neg=x<0;let s=Math.round(Math.abs(x)).toString();let last3=s.slice(-3),rest=s.slice(0,-3);if(rest)last3=','+last3;rest=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',');return (neg?'-':'')+rest+last3;}
@@ -267,7 +315,7 @@ function renderSales(period,U){
   const sales=(DB.sales||[]).filter(s=>s.date===period);
   // only show if there is at least one group with a Sales metric
   const have=sales.some(s=>s.metrics&&s.metrics.Sales);
-  if(!have){ sec.style.display='none'; return; }
+  if(!have){ sec.style.display='none'; return {has:false,pct:0,yearPct:0}; }
   sec.style.display='';
   const rows=sales.filter(s=>s.metrics&&s.metrics.Sales).map(s=>({
     g:s.group, a:s.metrics.Sales.actual||0, t:s.metrics.Sales.target||0
@@ -298,6 +346,7 @@ function renderSales(period,U){
   ]},options:{plugins:{legend:{position:'top',labels:{boxWidth:10,padding:10,font:{size:10.5}}},
     tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+money(c.raw)+' '+uLabel()}}},
     scales:{y:{grid:{color:css('--line'),drawTicks:false},ticks:{callback:v=>money(v)}},x:{grid:{display:false},ticks:{font:{size:9.5}}}}}}); }catch(e){}
+  return {has:true, pct:ach, yearPct:yearPct};
 }
 const PALETTE=['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8','--c9','--c10'].map(css);
 
@@ -345,7 +394,7 @@ function render(){
     <div class="card ${expenseTotal<=revenue?'pos':'neg'}"><div class="k">Total Expense</div><div class="v">${money(expenseTotal)}${U}</div><div class="sub">COGS ${money(cogs)} · Opex ${money(opex)}</div></div>`;
 
   /* ----- Sales vs Annual Target (optional section) ----- */
-  renderSales(activePeriod, U);
+  const salesAch = renderSales(activePeriod, U) || {has:false,pct:0,yearPct:0};
 
   /* working capital KPIs — YTD flows (Closing) over lapsed days since FY start */
   const lapsed=(DB.meta.lapsedDays&&DB.meta.lapsedDays[activePeriod])||days;
@@ -411,7 +460,49 @@ function render(){
     ic.forEach(i=>{it.innerHTML+=`<tr><td>${i.cat}</td><td class="dim">${i.items}</td><td>${money(i.buckets[0])}</td><td>${money(i.buckets[1])}</td><td>${money(i.buckets[2])}</td><td style="color:${css('--neg')}">${money(i.buckets[3])}</td><td><b>${money(i.total)}</b></td></tr>`;});
   }
 
+  /* ----- Interpretation layer (rule-based, from interpret.js) ----- */
+  try{ renderInterpretation({
+    dso:dso, dio:dio, dpo:dpo,
+    currentRatio:curRatio, quickRatio:quick, debtEquity:de,
+    netMarginPct:margin, grossMarginPct:gm,
+    invOver90Pct: invTotal?(invSlow/invTotal*100):0,
+    arOver90Pct: arNet?(arOverdue/arNet*100):0,
+    achievementPct: salesAch.pct, yearPct: salesAch.yearPct,
+    hasInv: invAll.length>0, hasSales: salesAch.has
+  }); }catch(e){}
+
   document.getElementById('foot').innerHTML=`Source: MOSData workbook · TrialBal, ARAging, InvtAging · Period ${activePeriod} · Figures in ${unit==='full'?'NPR':unit.charAt(0).toUpperCase()+unit.slice(1)+' (NPR)'}<br>Append a new period to add data; re-import a period to replace it. Efficiency KPIs use ${lapsed} days elapsed since fiscal-year start.`;
+}
+function renderInterpretation(metrics){
+  if(!window.MOS_interpret){ return; }
+  const wrap=document.getElementById('exsumWrap'), list=document.getElementById('exsumList');
+  // if insights are switched off, hide summary and all verdicts
+  if(!showInsights){
+    if(wrap) wrap.style.display='none';
+    ['recvAnchor','invAnchor','liqAnchor','profAnchor','salesAnchor'].forEach(id=>{var e=document.getElementById(id); if(e){e.innerHTML='';e.style.display='none';}});
+    return;
+  }
+  const out=window.MOS_interpret(metrics);
+  // executive summary
+  if(wrap&&list&&out.summary&&out.summary.length){
+    list.innerHTML=out.summary.map(s=>`<li><span class="vc-${s.lvl}">${s.text}</span></li>`).join('');
+    wrap.style.display='';
+  } else if(wrap){ wrap.style.display='none'; }
+  // section verdict + action injected under each section's panels
+  injectVerdict('recvAnchor', out.sections.receivables);
+  injectVerdict('invAnchor', out.sections.inventory);
+  injectVerdict('liqAnchor', out.sections.liquidity);
+  injectVerdict('profAnchor', out.sections.profitability);
+  injectVerdict('salesAnchor', out.sections.sales);
+}
+function injectVerdict(anchorId, sec){
+  const el=document.getElementById(anchorId);
+  if(!el) return;
+  if(!sec){ el.innerHTML=''; el.style.display='none'; return; }
+  el.style.display='';
+  let html=`<div class="verdict"><span class="dot bg-${sec.level}"></span><span><b class="vc-${sec.level}">${sec.verdict.split('.')[0]}.</b>${sec.verdict.substring(sec.verdict.indexOf('.')+1)}</span></div>`;
+  if(sec.action){ html+=`<div class="action ${sec.level==='concern'?'concern':''}"><span>&rarr;</span><span><b>Suggested action:</b> ${sec.action}</span></div>`; }
+  el.innerHTML=html;
 }
 function setUnit(u){unit=u;document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('on',b.dataset.u===u));render();}
 async function init(){
@@ -421,6 +512,10 @@ async function init(){
   document.getElementById('periodSel').onchange=e=>{activePeriod=e.target.value;activeAgent="All";render();};
   document.getElementById('agentSel').onchange=e=>{activeAgent=e.target.value;render();};
   document.querySelectorAll('#unitToggle button').forEach(b=>b.onclick=()=>setUnit(b.dataset.u));
+  const it=document.getElementById('insightsToggle');
+  if(it) it.onclick=(e)=>{ e.preventDefault(); showInsights=!showInsights;
+    document.getElementById('insightsSwitch').classList.toggle('on',showInsights);
+    render(); };
   const rb=document.getElementById('resetBtn');
   if(rb) rb.onclick=()=>{activePeriod=DB.meta.periods[DB.meta.periods.length-1];activeAgent="All";unit="crore";
     document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('on',b.dataset.u==='crore'));
